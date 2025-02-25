@@ -2,7 +2,7 @@
 const IMAGE_URL = "https://www.observatorioremoto.com/emadato/temperatura.jpg";
 
 Deno.serve(async (req: Request) => {
-  if (req.url === "/image") {
+ // if (req.url === "/image") {
     const response = await fetch(IMAGE_URL);
     const imageBlob = await response.blob();
     const imageArrayBuffer = await imageBlob.arrayBuffer();
@@ -15,7 +15,7 @@ Deno.serve(async (req: Request) => {
         "Content-Length": imageUint8Array.byteLength.toString(),
       },
     });
-  }
+//  }
 
   return new Response("Not any thing Found there", { status: 404 });
 });
