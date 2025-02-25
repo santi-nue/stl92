@@ -1,5 +1,5 @@
-import { parse } from "https://deno.land/std@0.181.0/encoding/csv.ts";
-import JSZip from "npm:jszip@^3.10.1";
+import JSZip from 'jszip';
+import { Parser } from 'json2csv';
 
 import { Buffer } from "node:buffer";
 import fetch from "npm:node-fetch";
@@ -18,7 +18,7 @@ interface Airline {
 
 async function processAirlines(): Promise<Uint8Array> {
   const zip = new Zip();
-  const data = await Deno.readTextFile('https://raw.githubusercontent.com/santi-nue/stl92/refs/heads/main/airlines.csv');
+  const data = await Deno.readTextFile('airlines.csv');
   const result = await parse(data, {
     skipFirstRow: false,
     columns: ['code', 'name', 'alias', 'iata', 'icao', 'callsign', 'country'],
@@ -43,6 +43,9 @@ async function processAirlines(): Promise<Uint8Array> {
   return await zip.generateAsync({ type: 'uint8array' });
 }
 
+
+/******************
+
 Deno.serve(async (req: Request) => {
   if (req.method === 'GET') {
     try {
@@ -65,6 +68,8 @@ Deno.serve(async (req: Request) => {
     return new Response("Method Not Allowed", { status: 405 });
   }
 });
+
+*********************/
 
 
 
