@@ -18,7 +18,7 @@ interface Airline {
 
 async function processAirlines(): Promise<Uint8Array> {
   const zip = new Zip();
-  const data = await Deno.readTextFile('airlines.csv');
+  const data = await Deno.readTextFile('https://raw.githubusercontent.com/santi-nue/stl92/refs/heads/main/airlines.csv');
   const result = await parse(data, {
     skipFirstRow: false,
     columns: ['code', 'name', 'alias', 'iata', 'icao', 'callsign', 'country'],
