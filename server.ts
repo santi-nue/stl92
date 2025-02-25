@@ -1,5 +1,5 @@
 import { parse } from "https://deno.land/std@0.181.0/encoding/csv.ts";
-import JSZip from "npm:jszip@^3.11.0";
+import JSZip from "npm:jszip@^3.10.1";
 
 import { Buffer } from "node:buffer";
 import fetch from "npm:node-fetch";
