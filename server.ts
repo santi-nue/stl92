@@ -1,5 +1,7 @@
 // server.ts
-const IMAGE_URL = "https://www.observatorioremoto.com/emadato/temperatura.jpg";
+//const IMAGE_URL = "https://www.observatorioremoto.com/emadato/temperatura.jpg";
+
+const IMAGE_URL = "https://cdn.airnavradar.com/airlines/sq/IBE.png";
 
 Deno.serve(async (req: Request) => {
  // if (req.url === "/image") {
