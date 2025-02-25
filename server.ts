@@ -17,6 +17,6 @@ Deno.serve(async (req: Request) => {
     });
   }
 
-  return new Response("Not Found", { status: 404 });
+  return new Response("Not any thing Found there", { status: 404 });
 });
 
