@@ -1,15 +1,27 @@
-import { serve } from "https://deno.land/std@0.177.0/http/server.ts";
+// server.ts
+import { serve } from "https://deno.land/std/http/server.ts";
 
-serve(async (req) => {
-  if (req.url === "/") {
-    const imageUrl = "https://www.observatorioremoto.com/emadato/temperatura.jpg";
-    const response = await fetch(imageUrl);
-    const imageData = await response.arrayBuffer();
-    return new Response(imageData, {
+const PORT = 8000;
+const IMAGE_URL = "https://www.observatorioremoto.com/emadato/temperatura.jpg";
+
+async function handleRequest(request: Request): Promise<Response> {
+  if (request.url === "/image") {
+    const response = await fetch(IMAGE_URL);
+    const imageBlob = await response.blob();
+    const imageArrayBuffer = await imageBlob.arrayBuffer();
+    const imageUint8Array = new Uint8Array(imageArrayBuffer);
+
+    return new Response(imageUint8Array, {
+      status: 200,
       headers: {
-        "Content-Type": "image/png",
+        "Content-Type": "image/jpeg",
+        "Content-Length": imageUint8Array.byteLength.toString(),
       },
     });
   }
-  return new Response("Not found", { status: 404 });
-});
+
+  return new Response("Not Found", { status: 404 });
+}
+
+console.log(`Server running on http://localhost:${PORT}`);
+await serve(handleRequest, { port: PORT });
