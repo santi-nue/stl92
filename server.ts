@@ -1,5 +1,7 @@
 import { parse } from "https://deno.land/std@0.181.0/encoding/csv.ts";
-import { ZipWriter, BlobReader, Data64URIWriter } from "https://deno.land/x/zipjs@v2.8.1/index.js";
+import JSZip from "npm:jszip@3.11.0";
+import { Buffer } from "node:buffer";
+import fetch from "node-fetch";
 
 interface Airline {
   code: string;
