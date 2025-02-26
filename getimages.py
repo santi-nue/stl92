@@ -3,6 +3,7 @@ import requests
 import zipfile
 import io
 import logging
+import os
 
 # Configure logging
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
@@ -17,6 +18,10 @@ def fetch_image(url):
         return None
 
 def create_zip_from_csv(csv_path, zip_path):
+    if not os.path.exists(csv_path):
+        logging.error(f"CSV file does not exist: {csv_path}")
+        return
+
     with open(csv_path, 'r') as csv_file:
         csv_reader = csv.DictReader(csv_file)
         zip_buffer = io.BytesIO()
@@ -33,4 +38,9 @@ def create_zip_from_csv(csv_path, zip_path):
         logging.info("ZIP file created successfully.")
 
 if __name__ == "__main__":
-    create_zip_from_csv('airlines.csv', 'airline_images.zip')
+    csv_path = 'airlines.csv'
+    zip_path = 'airline_images.zip'
+    create_zip_from_csv(csv_path, zip_path)
+
+
+
