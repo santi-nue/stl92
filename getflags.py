@@ -1,0 +1,67 @@
+import csv
+import requests
+import zipfile
+import io
+import logging
+import os
+
+# Configure logging
+logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
+
+def fetch_image(url):
+    try:
+        response = requests.get(url)
+        response.raise_for_status()
+        return response.content
+    except requests.RequestException as e:
+        logging.error(f"Error fetching image from {url}: {e}")
+        return None
+
+def create_zip_from_csv(csv_path, zip_path):
+    if not os.path.exists(csv_path):
+        logging.error(f"CSV file does not exist: {csv_path}")
+        return
+
+    logging.info(f"Reading CSV file: {csv_path}")
+    with open(csv_path, 'r') as csv_file:
+        csv_reader = csv.DictReader(csv_file)
+        zip_buffer = io.BytesIO()
+        with zipfile.ZipFile(zip_buffer, 'a', zipfile.ZIP_DEFLATED, False) as zip_file:
+            for row in csv_reader:
+                if 'ISO 3166-1 alpha-2' in row:
+                    code = row['ISO 3166-1 alpha-2']
+                    url = f"https://cdn.airnavradar.com/countries-rect/{code}.png"
+                    image_data = fetch_image(url)
+                    if image_data:
+                        zip_file.writestr(f"{code}.png", image_data)
+                        logging.info(f"Added image for code: {code}")
+                else:
+                    logging.warning("Code column not found in CSV row")
+        with open(zip_path, 'wb') as f:
+            f.write(zip_buffer.getvalue())
+        logging.info("ZIP file created successfully.")
+
+def create_empty_zip(zip_path):
+    with zipfile.ZipFile(zip_path, 'w') as zip_file:
+        # Creating an empty zip file
+        pass
+
+def print_csv_rows(csv_path):
+    if not os.path.exists(csv_path):
+        logging.error(f"CSV file does not exist: {csv_path}")
+        return
+
+    logging.info(f"Printing CSV file rows: {csv_path}")
+    with open(csv_path, 'r') as csv_file:
+        csv_reader = csv.DictReader(csv_file)
+        for row in csv_reader:
+            print(row)
+
+if __name__ == "__main__":
+    csv_path = 'countrycodes.csv'
+    zip_path = 'flags.zip'
+    print_csv_rows(csv_path)
+    create_empty_zip(zip_path)
+    create_zip_from_csv(csv_path, zip_path)
+
+    
