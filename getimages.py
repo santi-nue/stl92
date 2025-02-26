@@ -55,4 +55,12 @@ def print_csv_rows(csv_path):
     with open(csv_path, 'r') as csv_file:
         csv_reader = csv.DictReader(csv_file)
         for row in csv_reader:
-            ▋
+            print(row)
+
+if __name__ == "__main__":
+    csv_path = 'airlines.csv'
+    zip_path = 'airline_images.zip'
+    create_empty_zip(zip_path)
+    create_zip_from_csv(csv_path, zip_path)
+    print_csv_rows(csv_path)
+    
