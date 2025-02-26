@@ -28,7 +28,7 @@ def create_zip_from_csv(csv_path, zip_path):
         zip_buffer = io.BytesIO()
         with zipfile.ZipFile(zip_buffer, 'a', zipfile.ZIP_DEFLATED, False) as zip_file:
             for row in csv_reader:
-                if 'Code' in row:
+                if '\ufeffCode' in row:
                     code = row['\ufeffCode']
                     url = f"https://cdn.airnavradar.com/airlines/sq/{code}.png"
                     image_data = fetch_image(url)
