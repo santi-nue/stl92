@@ -17,6 +17,12 @@ def fetch_image(url):
         logging.error(f"Error fetching image from {url}: {e}")
         return None
 
+def create_empty_zip(zip_path):
+    with zipfile.ZipFile(zip_path, 'w') as zip_file:
+        # Creating an empty zip file
+        pass
+
+
 def create_zip_from_csv(csv_path, zip_path):
     if not os.path.exists(csv_path):
         logging.error(f"CSV file does not exist: {csv_path}")
@@ -41,6 +47,7 @@ def create_zip_from_csv(csv_path, zip_path):
 if __name__ == "__main__":
     csv_path = 'airlines.csv'
     zip_path = 'airline_images.zip'
+    create_empty_zip(zip_path)
     create_zip_from_csv(csv_path, zip_path)
 
 
