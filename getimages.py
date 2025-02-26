@@ -21,7 +21,8 @@ def create_zip_from_csv(csv_path, zip_path):
     if not os.path.exists(csv_path):
         logging.error(f"CSV file does not exist: {csv_path}")
         return
-
+        
+    logging.info(f"Reading CSV file: {csv_path}")
     with open(csv_path, 'r') as csv_file:
         csv_reader = csv.DictReader(csv_file)
         zip_buffer = io.BytesIO()
