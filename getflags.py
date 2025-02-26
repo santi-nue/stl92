@@ -30,6 +30,7 @@ def create_zip_from_csv(csv_path, zip_path):
             for row in csv_reader:
                 if 'ISO 3166-1 alpha-2' in row:
                     code = row['ISO 3166-1 alpha-2']
+                    code = code.lower()
                     url = f"https://cdn.airnavradar.com/countries-rect/{code}.png"
                     image_data = fetch_image(url)
                     if image_data:
