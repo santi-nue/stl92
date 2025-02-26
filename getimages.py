@@ -46,9 +46,13 @@ def create_empty_zip(zip_path):
         # Creating an empty zip file
         pass
 
-if __name__ == "__main__":
-    csv_path = 'airlines.csv'
-    zip_path = 'airline_images.zip'
-    create_empty_zip(zip_path)
-    create_zip_from_csv(csv_path, zip_path)
-    
+def print_csv_rows(csv_path):
+    if not os.path.exists(csv_path):
+        logging.error(f"CSV file does not exist: {csv_path}")
+        return
+
+    logging.info(f"Printing CSV file rows: {csv_path}")
+    with open(csv_path, 'r') as csv_file:
+        csv_reader = csv.DictReader(csv_file)
+        for row in csv_reader:
+            ▋
