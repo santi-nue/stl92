@@ -60,7 +60,8 @@ def print_csv_rows(csv_path):
 if __name__ == "__main__":
     csv_path = 'airlines.csv'
     zip_path = 'airline_images.zip'
+    print_csv_rows(csv_path)
     create_empty_zip(zip_path)
     create_zip_from_csv(csv_path, zip_path)
-    print_csv_rows(csv_path)
+
     
