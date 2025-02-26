@@ -24,3 +24,9 @@ jobs:
 
     - name: Run getimages.py
       run: python getimages.py
+
+    - name: Upload airline_images.zip
+      uses: actions/upload-artifact@v3
+      with:
+        name: airline_images
+        path: airline_images.zip
